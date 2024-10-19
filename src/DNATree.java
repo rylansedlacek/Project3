@@ -52,13 +52,47 @@ class DNATree {
 
     private void insertHelp(Node current, String sequence, int level) {
 
+        // if leaf
+        // if null
+        // if the node is a leaf
+        // set the sequence and print it out and level
+        // return
+        
+        // else if
+        // if the sequence is the same as the sequence
+        // print its a duplicate sequence and return
+        
+        // else
+        // then we need to turn a LEAF into an INTERNAL
+        // do that here, RECURSIVE CALL WILL HAPPEN HERE
+        
+        // else IS NOT LEAF
+        // here is where we will decide which branch of the internatnal
+        // node to go down RECURSIVE CALL WILL HAPPEN HERE
+
     }
+
+    // add splitting method 
+
+    //add get index method A C G T $
 
     public void print() {
         printHelp(root, 0);
     }
 
     private void printHelp(Node current, int level) {
+
+        // INDENATION FIRST
+        
+        // if its a leaf
+            // if NULL print E
+            // else print the sequence
+        // else print I
+        
+        // loop through get children
+        // RECURSIVE CALL TO DO THE SAME THING AS ABOVE ^^^
+
+        // will need spaces and E here
 
     }
 
