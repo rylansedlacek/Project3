@@ -50,7 +50,7 @@ class DNATree {
         insertHelp(root, sequence, 0);
     }
 
-    private void insertHelp(Node current, String sequence, int level) {
+    private void insertHelp(Node root, String sequence, int level) {
 
         // if leaf
         // if null
@@ -58,9 +58,8 @@ class DNATree {
         // set the sequence and print it out and level
         // return
         
-        // else if
-        // if the sequence is the same as the sequence
-        // print its a duplicate sequence and return
+        // else if the sequence already exists in tree
+            // print its a duplicate sequence and return
         
         // else
         // then we need to turn a LEAF into an INTERNAL
@@ -80,7 +79,7 @@ class DNATree {
         printHelp(root, 0);
     }
 
-    private void printHelp(Node current, int level) {
+    private void printHelp(Node root, int level) {
 
         // INDENATION FIRST
         
