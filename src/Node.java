@@ -17,6 +17,9 @@ class Node {
         }
     }
 
+    //TODO Ask Ian: is the children array set to null initially, or is it populated with
+    // A,C,G,T,$ which are all given null values?
+
 
     // basic getters and setters here:
 
