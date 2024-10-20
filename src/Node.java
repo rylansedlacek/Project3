@@ -24,6 +24,10 @@ class Node {
         return this.isLeaf;
     }
 
+    public void setLeafStatus(boolean newLeafStatus) {
+        this.isLeaf = newLeafStatus;
+    }
+
     public String getSequence() {
         return this.sequence;
     }
