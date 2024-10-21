@@ -1,0 +1,3 @@
+insert AA
+insert AAA
+print

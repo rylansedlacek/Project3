@@ -30,9 +30,9 @@ class DNATree {
 
             while (stdin.hasNextLine()) { //while we have a line
                 String command = stdin.nextLine(); // read in the line
-             
-                // TODO implement logic to evaluate EACH LINE
-                // we could call this getOperation and then doOperation
+               // System.out.println(command); 
+               // System.out.println();    
+                doOperation(command);
 
             }
             stdin.close(); // close the scanner
@@ -42,11 +42,24 @@ class DNATree {
 
     }
 
+    public void doOperation(String command) {
+        if (command.equals("print") || command.equals("Print")) {
+            print();
+        } else if (command.startsWith("insert")) {
+            String sequence = command.substring("insert ".length());
+            insert(sequence);
+        } else {
+            //TODO might not be needed
+            System.out.println("INVALID OPERATION");
+        }
+    }
+
     //THESE ARE MY IDEAS FOR WHAT METHODS WE WILL NEED
     //Assume we have a public call, and then private helper like used in class
     //Will need to implement recursively
 
     public void insert(String sequence) {
+       // System.out.println(sequence);
         insertHelp(root, sequence, 0);
     }
 
@@ -68,6 +81,16 @@ class DNATree {
         // else IS NOT LEAF
         // here is where we will decide which branch of the internatnal
         // node to go down RECURSIVE CALL WILL HAPPEN HERE
+        
+        if (root.isLeaf()) {
+            if (root.getSequence().equals("")) {
+                root.setSequence(sequence);
+                System.out.println("sequence " + sequence + " inserted at level " + level);
+            }
+
+        }
+
+
 
     }
 
@@ -76,6 +99,7 @@ class DNATree {
     //add get index method A C G T $
 
     public void print() {
+       // System.out.println("PRINTING");
         printHelp(root, 0);
     }
 
@@ -92,6 +116,38 @@ class DNATree {
         // RECURSIVE CALL TO DO THE SAME THING AS ABOVE ^^^
 
         // will need spaces and E here
+        
+        System.out.println("tree dump:");
+
+        for (int i=0; i < level * 2; i++) {
+            System.out.print(" ");
+        }
+
+        if (root.isLeaf()) {
+            if (root.getSequence().equals("")) {
+                System.out.println("E");
+            } else {
+                System.out.println(root.getSequence());
+            }
+        } else {
+            
+            System.out.println("I");
+            
+            // 5 children 
+            
+            for (int i=0; i<5; i++) {
+               Node[] tmp = root.getChildren();
+               if (tmp[i] != null) {
+                    printHelp(tmp[i],level + 1);
+               } else {
+                    for (int j=0; j < (level + 1) * 2; j++) {
+                        System.out.print(" ");
+                    }
+                    System.out.println("E");
+               }
+        }
+    }
+
 
     }
 
