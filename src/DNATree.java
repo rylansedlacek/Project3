@@ -38,7 +38,9 @@ class DNATree {
             stdin.close(); // close the scanner
         } catch (IOException e) {
             return; 
-      }   
+      }
+
+    // if SCANNER BREAKS OUT THE CLOSE HERE   
 
     }
 
@@ -86,8 +88,20 @@ class DNATree {
             if (root.getSequence().equals("")) {
                 root.setSequence(sequence);
                 System.out.println("sequence " + sequence + " inserted at level " + level);
-            }
+            } else if (root.getSequence().equals(sequence)) {
+                System.out.println("sequence " + sequence + " already exists");
+            } else {
+                //splitter here
+             String prefix = root.getSequence();
+             int index = getIndex(sequence.charAt(level));
+             Node[] tmp = root.getChildren();
+             tmp[index] = new Node(true, level +1);
+             tmp[index].setSequence(sequence);       
+             tmp[4] = new Node(true, level +1);
+               
+            // might be able to be be done RECUSIRVELY 
 
+           }
         }
 
 
@@ -97,6 +111,22 @@ class DNATree {
     // add splitting method 
 
     //add get index method A C G T $
+    
+   public int getIndex(char c) {
+        if (c == 'A') {
+            return 0;
+        } else if (c == 'C') {
+            return 1;
+        } else if (c == 'G') {
+            return 2;
+        } else if (c == 'T') {
+            return 3;
+        } else if (c == '$') {
+            return 4;
+        } else {
+            return 8;
+        }
+   }
 
     public void print() {
        // System.out.println("PRINTING");
