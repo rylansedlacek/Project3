@@ -110,7 +110,7 @@ class DNATree {
         }
         else {
             int index = getIndex(sequence.charAt(level));
-            nodeArray = root.getChildre();
+            Node[] nodeArray = root.getChildren();
             if (nodeArray[index] == null) {
                 nodeArray[index] = new Node(true, level + 1);
             }// end if nodeArra[index] == null
