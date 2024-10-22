@@ -96,13 +96,15 @@ class DNATree {
             } else {
                 //splitter here
              String existing = root.getSequence();
-             int index = getIndex(existing.charAt(level));
+             int index = getIndex(sequence.charAt(level)); // might be sequence
              Node[] tmp = new Node[5];
+             root.setChildren(tmp);
              tmp[index] = new Node(true, level +1);
              tmp[index].setSequence(sequence);  
             // insertHelp(root, sequence, level + 1);     
              tmp[4] = new Node(true, level);
-             tmp[4].setSequence(existing);   
+             tmp[4].setSequence(existing);  
+                 
             // might be able to be be done RECUSIRVELY 
            }
         }
