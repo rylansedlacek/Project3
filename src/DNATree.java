@@ -9,7 +9,8 @@ class DNATree {
 
     public DNATree(String filename) {
         this.filename = filename;
-        this.root = new Node(true, 0); // will start as a leaf at position 0
+        //TODO original root declaration below set isLeaf to true. Changed to just give position
+        this.root = new Node(0); // will start as a leaf at position 0
     }
 
 /*
@@ -34,12 +35,11 @@ class DNATree {
                // System.out.println(command); 
                // System.out.println();    
                 doOperation(command);
-
             }
             stdin.close(); // close the scanner
         } catch (IOException e) {
             return; 
-      }
+        }
 
     // if SCANNER BREAKS OUT THE CLOSE HERE   
 
@@ -63,7 +63,9 @@ class DNATree {
 
     public void insert(String sequence) {
        // System.out.println(sequence);
-        insertHelp(root, sequence, 0);
+        //TODO commented out insertHelp call and replaced with insertHelp2 call
+        //insertHelp(root, sequence, 0);
+        insertHelp2(root, sequence, 0);
     }
 
     private void insertHelp(Node root, String sequence, int level) {
@@ -116,10 +118,51 @@ class DNATree {
             }// end if nodeArra[index] == null
             insertHelp(nodeArray[index], sequence, level + 1);
         }
+    }//end insertHelp
 
+    private void insertHelp2 (Node currNode, String sequence, int level) {
+        // base case. We know we have reached the correct level if the size of level
+        // is equal to the length of the sequence
+        if (level == sequence.length()) {
+            // if sequence is already stored, we are attempting to insert a duplicate sequence
+            if (currNode.getSequence() == sequence) {
+                System.out.println("Sequence " + sequence + " already exists.");
+                return;
+            }
+            //make this node a leaf, since it's where the sequence will go
+            currNode.setLeafStatus(true);
+            //insert the sequence into the node
+            currNode.setSequence(sequence);
+            System.out.println("Sequence " + sequence + " inserted at level " + level);
+            return;
+        }// end if level == sequence.length()
 
+        // collect the current character (the level indicates which string index we're on)
+        char currentChar = sequence.charAt(level);
+        //translate currentChar to an index value for internal array
+        int arrayIndex = getIndex(currentChar);
 
-    }
+        // Collect the children array from currNode
+        Node[] currChildren = currNode.getChildren();
+        // If there is no child for this character, create a new one
+        if (currChildren[arrayIndex] == null) {
+            currChildren[arrayIndex] = new Node(level + 1);
+        }// end if currChildren[arrayIndex] == null
+        
+        // Handle the case where a node is already storing a prefix
+        if (currNode.isLeaf()) {
+            String prefix = currNode.getSequence();
+            currNode.setLeafStatus(false);
+            currNode.setSequence(null);
+            // create a new node to store the prefix
+            currChildren[4] = new Node(level + 1);
+            // recursively call function to insert the prefix into the $ index
+            insertHelp2(currChildren[4], prefix, level);
+        }// end if currNode.isLeaf() 
+
+        insertHelp2(currChildren[arrayIndex], sequence, level + 1);
+
+    }// end insertHelp2
 
     // add splitting method 
 
