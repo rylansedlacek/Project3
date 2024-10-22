@@ -12,7 +12,7 @@ class DNATree {
         this.root = new Node(true, 0); // will start as a leaf at position 0
     }
 
-
+/*
     public static void main(String args[]) {
         if (args.length != 1) {
             System.out.println("INVALID USAGE");
@@ -22,6 +22,7 @@ class DNATree {
         DNATree tree = new DNATree(args[0]);
         tree.read();
     }
+*/
 
     public void read() {
          try {
@@ -96,8 +97,9 @@ class DNATree {
              int index = getIndex(sequence.charAt(level));
              Node[] tmp = root.getChildren();
              tmp[index] = new Node(true, level +1);
-             tmp[index].setSequence(sequence);       
-             tmp[4] = new Node(true, level +1);
+             tmp[index].setSequence(sequence);  
+             insertHelp(root, sequence, level + 1);     
+            // tmp[4] = new Node(true, level +1);
                
             // might be able to be be done RECUSIRVELY 
 
