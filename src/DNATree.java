@@ -108,6 +108,14 @@ class DNATree {
             // might be able to be be done RECUSIRVELY 
            }
         }
+        else {
+            int index = getIndex(sequence.charAt(level));
+            nodeArray = root.getChildre();
+            if (nodeArray[index] == null) {
+                nodeArray[index] = new Node(true, level + 1);
+            }// end if nodeArra[index] == null
+            insertHelp(nodeArray[index], sequence, level + 1);
+        }
 
 
 
