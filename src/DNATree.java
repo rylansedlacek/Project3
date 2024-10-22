@@ -89,20 +89,21 @@ class DNATree {
             if (root.getSequence() == null) {
                 root.setSequence(sequence);
                 System.out.println("sequence " + sequence + " inserted at level " + level);
+                return;
             } else if (root.getSequence().equals(sequence)) {
                 System.out.println("sequence " + sequence + " already exists");
+                return;
             } else {
                 //splitter here
-             String prefix = root.getSequence();
-             int index = getIndex(sequence.charAt(level));
-             Node[] tmp = root.getChildren();
+             String existing = root.getSequence();
+             int index = getIndex(existing.charAt(level));
+             Node[] tmp = new Node[5];
              tmp[index] = new Node(true, level +1);
              tmp[index].setSequence(sequence);  
-             insertHelp(root, sequence, level + 1);     
-            // tmp[4] = new Node(true, level +1);
-               
+            // insertHelp(root, sequence, level + 1);     
+             tmp[4] = new Node(true, level);
+             tmp[4].setSequence(existing);   
             // might be able to be be done RECUSIRVELY 
-
            }
         }
 
