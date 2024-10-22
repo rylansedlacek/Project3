@@ -8,7 +8,7 @@ class Node {
     public Node(boolean isLeaf, int level) { // creating a node we only need these
         this.isLeaf = isLeaf;
         this.level = level;
-        this.sequence = "";
+        this.sequence = null;
 
         if (isLeaf) { // if its a leaf has no children set null
             this.children = null;
@@ -46,6 +46,10 @@ class Node {
     public Node[] getChildren() {
         return this.children;
     }
+
+    public void setChildren(Node[] children) {
+       this.children = children;
+    }   
 
 
 

@@ -86,7 +86,7 @@ class DNATree {
         // node to go down RECURSIVE CALL WILL HAPPEN HERE
         
         if (root.isLeaf()) {
-            if (root.getSequence().equals("")) {
+            if (root.getSequence() == null) {
                 root.setSequence(sequence);
                 System.out.println("sequence " + sequence + " inserted at level " + level);
             } else if (root.getSequence().equals(sequence)) {
@@ -156,7 +156,7 @@ class DNATree {
         }
 
         if (root.isLeaf()) {
-            if (root.getSequence().equals("")) {
+            if (root.getSequence() == null) {
                 System.out.println("E");
             } else {
                 System.out.println(root.getSequence());
@@ -178,7 +178,7 @@ class DNATree {
                     System.out.println("E");
                }
         }
-    }
+     }
 
 
     }
