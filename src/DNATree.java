@@ -65,8 +65,57 @@ class DNATree {
        // System.out.println(sequence);
         //TODO commented out insertHelp call and replaced with insertHelp2 call
         //insertHelp(root, sequence, 0);
-        insertHelp2(root, sequence, 0);
+        //insertHelp2(root, sequence, 0);
+        insertHelp3(root, sequence, 0);
     }
+
+
+    private void insertHelp3(Node curr, String sequence, int level) {
+        
+        if (curr.isLeaf()) {
+            if (curr.getSequence() == null) {
+                curr.setSequence(sequence);
+                System.out.println("sequence " + sequence + 
+                        " inserted at level " + curr.getLevel());
+                return;
+            } else if (curr.getSequence().equals(sequence)) {
+                System.out.println("sequence " + sequence + " already exists");
+                return;
+            } else {
+               Node[] tmp = new Node[5];
+               curr.setChildren(tmp);
+               String exist = curr.getSequence();
+              curr.setSequence(null); 
+               curr = splitLeaf(curr, exist, level);
+               insertHelp3(curr, sequence, level);
+            } // end nested
+
+
+        } else {
+            int index = getIndex(sequence.charAt(level));
+            Node[] children = curr.getChildren();
+            if (children[index] == null) {
+                children[index] = new Node(true, level +1);
+            }
+            
+            insertHelp3(children[index], sequence, level +1);
+
+        } // else its not a leaf
+
+
+
+
+    }
+
+    private Node splitLeaf(Node current, String exist, int level) {
+        int index = getIndex(exist.charAt(level));
+        Node[] tmp = current.getChildren();
+        tmp[index] = new Node(true, level +1);
+        tmp[index].setSequence(exist);
+        return current;
+    }
+
+
 
     private void insertHelp(Node root, String sequence, int level) {
 

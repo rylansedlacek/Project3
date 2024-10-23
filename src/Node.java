@@ -11,7 +11,7 @@ class Node {
         this.sequence = null;
 
         if (isLeaf) { // if its a leaf has no children set null
-            this.children = null;
+            this.children = new Node[5];
         } else {
             this.children = new Node[5]; // otherwise make our 5 spaces filed later
         }
