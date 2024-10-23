@@ -1,0 +1,5 @@
+insert CAT
+insert ACGTACGT
+insert GCAT
+insert TTAT
+print

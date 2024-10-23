@@ -124,19 +124,24 @@ class DNATree {
     private void insertHelp2 (Node currNode, String sequence, int level) {
         // base case. We know we have reached the correct level if the size of level
         // is equal to the length of the sequence
-        if (level == sequence.length()) {
+      //  if (level == sequence.length()) {
             // if sequence is already stored, we are attempting to insert a duplicate sequence
             if (currNode.getSequence() == sequence) {
                 System.out.println("Sequence " + sequence + " already exists.");
                 return;
             }
+
+            if (!currNode.isLeaf()) {
             //make this node a leaf, since it's where the sequence will go
             currNode.setLeafStatus(true);
             //insert the sequence into the node
             currNode.setSequence(sequence);
+           // System.out.println("HERE ");
             System.out.println("Sequence " + sequence + " inserted at level " + level);
-            return;
-        }// end if level == sequence.length()
+           return;
+            }
+
+       // }// end if level == sequence.length()
 
         // collect the current character (the level indicates which string index we're on)
         char currentChar = sequence.charAt(level);
@@ -186,7 +191,7 @@ class DNATree {
    }
 
     public void print() {
-       // System.out.println("PRINTING");
+       System.out.println("tree dump:");
         printHelp(root, 0);
     }
 
@@ -204,7 +209,7 @@ class DNATree {
 
         // will need spaces and E here
         
-        System.out.println("tree dump:");
+        //System.out.println("tree dump:");
 
         for (int i=0; i < level * 2; i++) {
             System.out.print(" ");
