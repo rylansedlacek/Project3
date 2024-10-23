@@ -104,11 +104,12 @@ class DNATree {
             // insertHelp(root, sequence, level + 1);     
              tmp[4] = new Node(true, level);
              tmp[4].setSequence(existing);  
-                 
+                    // TODO THERE NEEDS TO BE A RECURSIVE CALL HERE
             // might be able to be be done RECUSIRVELY 
            }
         }
         else {
+            System.out.println("MADE IT EHRE");
             int index = getIndex(sequence.charAt(level));
             Node[] nodeArray = root.getChildren();
             if (nodeArray[index] == null) {
