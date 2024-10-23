@@ -17,6 +17,15 @@ class Node {
         }
     }
 
+    //ADDED new constructor that only takes level, and sets isLeaf to false
+    public Node(int level){
+        this.isLeaf = false;
+        this.sequence = null;
+        this.level = level;
+        this.children = new Node[5];
+
+    }// end constructor taking only level
+
     //TODO Ask Ian: is the children array set to null initially, or is it populated with
     // A,C,G,T,$ which are all given null values?
 
