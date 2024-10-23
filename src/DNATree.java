@@ -9,21 +9,8 @@ class DNATree {
 
     public DNATree(String filename) {
         this.filename = filename;
-        //TODO original root declaration below set isLeaf to true. Changed to just give position
-        this.root = new Node(0); // will start as a leaf at position 0
+        this.root = new Node (true, 0);
     }
-
-/*
-    public static void main(String args[]) {
-        if (args.length != 1) {
-            System.out.println("INVALID USAGE");
-            return;
-        }
-
-        DNATree tree = new DNATree(args[0]);
-        tree.read();
-    }
-*/
 
     public void read() {
          try {
@@ -32,18 +19,13 @@ class DNATree {
 
             while (stdin.hasNextLine()) { //while we have a line
                 String command = stdin.nextLine(); // read in the line
-               // System.out.println(command); 
-               // System.out.println();    
                 doOperation(command);
             }
             stdin.close(); // close the scanner
         } catch (IOException e) {
             return; 
         }
-
-    // if SCANNER BREAKS OUT THE CLOSE HERE   
-
-    }
+    } // end read
 
     public void doOperation(String command) {
         if (command.equals("print") || command.equals("Print")) {
@@ -55,120 +37,86 @@ class DNATree {
             //TODO might not be needed
             System.out.println("INVALID OPERATION");
         }
-    }
-
-    //THESE ARE MY IDEAS FOR WHAT METHODS WE WILL NEED
-    //Assume we have a public call, and then private helper like used in class
-    //Will need to implement recursively
+    } // end doOperation
 
     public void insert(String sequence) {
-       // System.out.println(sequence);
-        //TODO commented out insertHelp call and replaced with insertHelp2 call
-        //insertHelp(root, sequence, 0);
-        //insertHelp2(root, sequence, 0);
         insertHelp3(root, sequence, 0);
-    }
+    } // end insert
 
-
+    //TODO!!!
+    // This is very very close breaks typically on line 70 and 78 WILL FIX THIS BY TONIGHT
+    // HOPING TO GET DONE ON OCT 23
+    
     private void insertHelp3(Node curr, String sequence, int level) {
-        
-        if (curr.isLeaf()) {
-            if (curr.getSequence() == null) {
-                curr.setSequence(sequence);
-                System.out.println("sequence " + sequence + 
+         if (curr.isLeaf()) { // if the node is a leaf
+            if (curr.getSequence() == null) { // and it has no sequence
+                curr.setSequence(sequence); // set the sequence 
+                System.out.println("sequence " + sequence + // say we did it
                         " inserted at level " + curr.getLevel());
-                return;
-            } else if (curr.getSequence().equals(sequence)) {
-                System.out.println("sequence " + sequence + " already exists");
-                return;
-            } else {
-               Node[] tmp = new Node[5];
-               curr.setChildren(tmp);
-               String exist = curr.getSequence();
-              curr.setSequence(null); 
-               curr = splitLeaf(curr, exist, level);
-               insertHelp3(curr, sequence, level);
-            } // end nested
+                return; // RETURN OUT!
 
-
-        } else {
-            int index = getIndex(sequence.charAt(level));
-            Node[] children = curr.getChildren();
-            if (children[index] == null) {
-                children[index] = new Node(true, level +1);
-            }
+            } else if (curr.getSequence().equals(sequence)) { // if its a leaf and we have duplicate
+                System.out.println("sequence " + sequence + " already exists"); // say that
+                return; // RETURN OUT
+            } else { // else we know we need to turn the leaf into an internal node
+                String existingSequence = curr.getSequence(); // store exisitng sequence
+                curr.setSequence(null); // then set it to null
+                curr.setLeafStatus(false); // no longer a leaf
+                Node[] child = new Node[5];
+                curr.setChildren(child); // populate the children ARRAY
             
-            insertHelp3(children[index], sequence, level +1);
+                curr = splitLeaf(curr, existingSequence, level); // split leaf using the splitLeaf
+           
+                insertHelp3(curr, sequence, level); // then insert the new sequence at NEXT level
+                return; // return OUT!
+            }
+        } else { // if its not a leaf then we are dealing with an internal node
+            int index = getIndex(sequence.charAt(level)); // get the index, so we know where to 
+                                                          // branch out from
+            Node[] children = curr.getChildren(); // get the children
+            if (children[index] == null) { // if we have room
+                children[index] = new Node(true, level + 1); // we can make a new node one level
+                                                             // down
+            }
 
-        } // else its not a leaf
+            insertHelp3(children[index], sequence, level + 1); // then we recursively insert down
+                                                               // the levels passing that new node
+        }
+    } // end insertHelp3
 
+      public int getIndex(char c) {
+        if (c == 'A') {
+            return 0;
+        } else if (c == 'C') {
+            return 1;
+        } else if (c == 'G') {
+            return 2;
+        } else if (c == 'T') {
+            return 3;
+        } else if (c == '$') {
+            return 4;
+        } else {
+            return 8; // we should never get here 8 is just a random choice
+        }
+     } // end getIndex
 
+     private Node splitLeaf(Node current, String exist, int level) {
+            int index; // create a place to store our index
 
-
-    }
-
-    private Node splitLeaf(Node current, String exist, int level) {
-        int index = getIndex(exist.charAt(level));
-        Node[] tmp = current.getChildren();
-        tmp[index] = new Node(true, level +1);
-        tmp[index].setSequence(exist);
-        return current;
-    }
-
-
-
-    private void insertHelp(Node root, String sequence, int level) {
-
-        // if leaf
-        // if null
-        // if the node is a leaf
-        // set the sequence and print it out and level
-        // return
-        
-        // else if the sequence already exists in tree
-            // print its a duplicate sequence and return
-        
-        // else
-        // then we need to turn a LEAF into an INTERNAL
-        // do that here, RECURSIVE CALL WILL HAPPEN HERE
-        
-        // else IS NOT LEAF
-        // here is where we will decide which branch of the internatnal
-        // node to go down RECURSIVE CALL WILL HAPPEN HERE
-        
-        if (root.isLeaf()) {
-            if (root.getSequence() == null) {
-                root.setSequence(sequence);
-                System.out.println("sequence " + sequence + " inserted at level " + level);
-                return;
-            } else if (root.getSequence().equals(sequence)) {
-                System.out.println("sequence " + sequence + " already exists");
-                return;
+            if (level < exist.length()) { // if the current level is within length
+                index = getIndex(exist.charAt(level)); // get the index
             } else {
-                //splitter here
-             String existing = root.getSequence();
-             int index = getIndex(sequence.charAt(level)); // might be sequence
-             Node[] tmp = new Node[5];
-             root.setChildren(tmp);
-             tmp[index] = new Node(true, level +1);
-             tmp[index].setSequence(sequence);  
-            // insertHelp(root, sequence, level + 1);     
-             tmp[4] = new Node(true, level);
-             tmp[4].setSequence(existing);  
-                    // TODO THERE NEEDS TO BE A RECURSIVE CALL HERE
-            // might be able to be be done RECUSIRVELY 
-           }
-        }
-        else {
-            System.out.println("MADE IT EHRE");
-            int index = getIndex(sequence.charAt(level));
-            Node[] nodeArray = root.getChildren();
-            if (nodeArray[index] == null) {
-                nodeArray[index] = new Node(true, level + 1);
-            }// end if nodeArra[index] == null
-            insertHelp(nodeArray[index], sequence, level + 1);
-        }
-    }//end insertHelp
+                index = getIndex('$'); // if its beyond the length, we make it $, always will be 4
+            }
+    
+            Node[] tmp = current.getChildren(); // then grab the children
+            tmp[index] = new Node(true, level + 1); // set the child at the index to a new node
+                                                    // one level down
+
+            tmp[index].setSequence(exist); // set the sequence
+            return current; // return the current node we just modified
+     } // end splitLeaf
+
 
     private void insertHelp2 (Node currNode, String sequence, int level) {
         // base case. We know we have reached the correct level if the size of level
@@ -218,83 +166,47 @@ class DNATree {
         insertHelp2(currChildren[arrayIndex], sequence, level + 1);
 
     }// end insertHelp2
-
-    // add splitting method 
-
-    //add get index method A C G T $
-    
-   public int getIndex(char c) {
-        if (c == 'A') {
-            return 0;
-        } else if (c == 'C') {
-            return 1;
-        } else if (c == 'G') {
-            return 2;
-        } else if (c == 'T') {
-            return 3;
-        } else if (c == '$') {
-            return 4;
-        } else {
-            return 8;
-        }
-   }
-
+   
     public void print() {
        System.out.println("tree dump:");
         printHelp(root, 0);
-    }
+    } // end print
 
     private void printHelp(Node root, int level) {
 
-        // INDENATION FIRST
-        
-        // if its a leaf
-            // if NULL print E
-            // else print the sequence
-        // else print I
-        
-        // loop through get children
-        // RECURSIVE CALL TO DO THE SAME THING AS ABOVE ^^^
-
-        // will need spaces and E here
-        
-        //System.out.println("tree dump:");
-
         for (int i=0; i < level * 2; i++) {
-            System.out.print(" ");
+            System.out.print(" "); // based on the level * 2 (2 spaces) we print spaces
         }
 
-        if (root.isLeaf()) {
-            if (root.getSequence() == null) {
-                System.out.println("E");
+        if (root.isLeaf()) { // if we are dealing with a leaf
+            if (root.getSequence() == null) { // if its null
+                System.out.println("E"); // we just print empty
             } else {
-                System.out.println(root.getSequence());
+                System.out.println(root.getSequence()); // otherwise we know we can print the
+                                                        // sequence
             }
         } else {
-            
-            System.out.println("I");
+            System.out.println("I"); // else we know its internal so go ahead and print I
             
             // 5 children 
             
-            for (int i=0; i<5; i++) {
-               Node[] tmp = root.getChildren();
-               if (tmp[i] != null) {
-                    printHelp(tmp[i],level + 1);
+            for (int i=0; i<5; i++) { // loop through each of the 5 children
+               Node[] tmp = root.getChildren(); // get them
+               if (tmp[i] != null) { // if its not null
+                    printHelp(tmp[i],level + 1); // we recursively go down the levels, 
+                                                 // using the tmp index and increase level
+                                                 // by 1
                } else {
-                    for (int j=0; j < (level + 1) * 2; j++) {
-                        System.out.print(" ");
+                    for (int j=0; j < (level + 1) * 2; j++) {  
+                        System.out.print(" "); // if it is null, then we have to first increase
+                                               // the level, because we are on a diff level
+                                               // then we multiply by 2 (2 spaces)
                     }
-                    System.out.println("E");
-               }
-        }
-     }
+                    System.out.println("E"); // print E after the spaces cause its empty
+               } // end else
+            }
+        }  
+    } // end print help
 
 
-    }
-
-
-
-
-
-
-}
+} // end DNATree

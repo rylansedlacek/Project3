@@ -1,0 +1,10 @@
+insert AGG
+print
+insert CTAG
+insert G
+insert AGG
+insert CACCT
+insert CTTTT
+insert CTAG
+insert ATCGGTCGAAA
+print

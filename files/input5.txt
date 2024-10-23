@@ -1,0 +1,22 @@
+insert AAA
+insert AA
+insert AC
+insert AG
+insert AT
+insert CA
+insert CC
+insert CG
+insert CT
+insert GA
+insert GC
+insert GG
+insert GT
+insert TA
+insert TC
+insert TG
+insert TT
+insert A
+insert C
+insert G
+insert T
+print

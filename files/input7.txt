@@ -1,0 +1,8 @@
+insert A
+insert C
+insert G
+insert T
+insert AAA
+insert A
+insert AC
+print
