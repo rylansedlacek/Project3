@@ -48,6 +48,7 @@ class DNATree {
     // HOPING TO GET DONE ON OCT 23
     
     private void insertHelp3(Node curr, String sequence, int level) {
+
          if (curr.isLeaf()) { // if the node is a leaf
             if (curr.getSequence() == null) { // and it has no sequence
                 curr.setSequence(sequence); // set the sequence 
@@ -71,8 +72,13 @@ class DNATree {
                 return; // return OUT!
             }
         } else { // if its not a leaf then we are dealing with an internal node
-            int index = getIndex(sequence.charAt(level)); // get the index, so we know where to 
-                                                          // branch out from
+             int index;
+            if (sequence.length() > level) {
+             index = getIndex(sequence.charAt(level)); // get the index, so we know where to 
+            } else {             // branch out from
+               index = 4;
+            }
+
             Node[] children = curr.getChildren(); // get the children
             if (children[index] == null) { // if we have room
                 children[index] = new Node(true, level + 1); // we can make a new node one level
