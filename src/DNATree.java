@@ -27,7 +27,9 @@ class DNATree {
         }
     } // end read
 
-    public void doOperation(String command) {
+    public void doOperation(String command) { // this method decides what helper method to call
+                                              // either print or insert, if its invalid we will
+                                              // print that
         if (command.equals("print") || command.equals("Print")) {
             print();
         } else if (command.startsWith("insert")) {
@@ -43,9 +45,6 @@ class DNATree {
         insertHelp3(root, sequence, 0);
     } // end insert
 
-    //TODO!!!
-    // This is very very close breaks typically on line 70 and 78 WILL FIX THIS BY TONIGHT
-    // HOPING TO GET DONE ON OCT 23
     
     private void insertHelp3(Node curr, String sequence, int level) {
 
@@ -57,7 +56,7 @@ class DNATree {
                 return; // RETURN OUT!
 
             } else if (curr.getSequence().equals(sequence)) { // if its a leaf and we have duplicate
-                System.out.println("sequence " + sequence + " already exists"); // say that
+                System.out.println("Sequence " + sequence + " already exists"); // say that
                 return; // RETURN OUT
             } else { // else we know we need to turn the leaf into an internal node
                 String existingSequence = curr.getSequence(); // store exisitng sequence
