@@ -1,0 +1,19 @@
+insert CAT
+insert ACGTACGT
+insert ACGTACGTT
+insert ACGT
+insert GTCA
+insert TATA
+insert ACGTACGTT
+insert GTGTGT
+insert GTGTA
+insert ACGTACG
+insert T
+insert TATATAG
+insert T
+insert G
+insert TATATAGAT
+insert TTTTTTTTTT
+insert TATA
+insert TAT
+print
