@@ -122,56 +122,7 @@ class DNATree {
             return current; // return the current node we just modified
      } // end splitLeaf
 
-
-    private void insertHelp2 (Node currNode, String sequence, int level) {
-        // base case. We know we have reached the correct level if the size of level
-        // is equal to the length of the sequence
-      //  if (level == sequence.length()) {
-            // if sequence is already stored, we are attempting to insert a duplicate sequence
-            if (currNode.getSequence() == sequence) {
-                System.out.println("Sequence " + sequence + " already exists.");
-                return;
-            }
-
-            if (!currNode.isLeaf()) {
-            //make this node a leaf, since it's where the sequence will go
-            currNode.setLeafStatus(true);
-            //insert the sequence into the node
-            currNode.setSequence(sequence);
-           // System.out.println("HERE ");
-            System.out.println("Sequence " + sequence + " inserted at level " + level);
-           return;
-            }
-
-       // }// end if level == sequence.length()
-
-        // collect the current character (the level indicates which string index we're on)
-        char currentChar = sequence.charAt(level);
-        //translate currentChar to an index value for internal array
-        int arrayIndex = getIndex(currentChar);
-
-        // Collect the children array from currNode
-        Node[] currChildren = currNode.getChildren();
-        // If there is no child for this character, create a new one
-        if (currChildren[arrayIndex] == null) {
-            currChildren[arrayIndex] = new Node(level + 1);
-        }// end if currChildren[arrayIndex] == null
-        
-        // Handle the case where a node is already storing a prefix
-        if (currNode.isLeaf()) {
-            String prefix = currNode.getSequence();
-            currNode.setLeafStatus(false);
-            currNode.setSequence(null);
-            // create a new node to store the prefix
-            currChildren[4] = new Node(level + 1);
-            // recursively call function to insert the prefix into the $ index
-            insertHelp2(currChildren[4], prefix, level);
-        }// end if currNode.isLeaf() 
-
-        insertHelp2(currChildren[arrayIndex], sequence, level + 1);
-
-    }// end insertHelp2
-   
+  
     public void print() {
        System.out.println("tree dump:");
         printHelp(root, 0);
